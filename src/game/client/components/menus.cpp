@@ -2659,4 +2659,46 @@ void CMenus::JoinTutorial()
 	m_JoinTutorial.m_TriedRefresh = false;
 	m_JoinTutorial.m_LocalServerState = CJoinTutorial::ELocalServerState::NOT_TRIED;
 	m_JoinTutorial.m_StateChange = time_get_nanoseconds();
+void CMenus::RenderWorstClientMenu(CUIRect MainView)
+{
+    CUIRect ButtonRow, ContentArea;
+
+    // Главная кнопка "Worst Client"
+    MainView.HSplitTop(25.0f, &ButtonRow, &MainView);
+    if(DoButton_Menu(&m_WorstClientMainBtn, "Worst Client", 0, &ButtonRow))
+    {
+        m_WorstClientOpen = !m_WorstClientOpen;
+    }
+
+    MainView.HSplitTop(10.0f, 0, &MainView);
+
+    // Раскрывающееся меню
+    if(m_WorstClientOpen)
+    {
+        CUIRect SubTabsRow;
+        MainView.HSplitTop(25.0f, &SubTabsRow, &MainView);
+
+        CUIRect BtnInfo, BtnNotif, BtnVisuals;
+        SubTabsRow.VSplitLeft(SubTabsRow.w / 3.0f, &BtnInfo, &SubTabsRow);
+        SubTabsRow.VSplitLeft(SubTabsRow.w / 2.0f, &BtnNotif, &BtnVisuals);
+
+        if(DoButton_Menu(&m_WorstTabInfoBtn, "Info", m_WorstClientTab == WORST_TAB_INFO, &BtnInfo))
+            m_WorstClientTab = WORST_TAB_INFO;
+
+        if(DoButton_Menu(&m_WorstTabNotifBtn, "Notification", m_WorstClientTab == WORST_TAB_NOTIFICATIONS, &BtnNotif))
+            m_WorstClientTab = WORST_TAB_NOTIFICATIONS;
+
+        if(DoButton_Menu(&m_WorstTabVisualsBtn, "Visuals", m_WorstClientTab == WORST_TAB_VISUALS, &BtnVisuals))
+            m_WorstClientTab = WORST_TAB_VISUALS;
+
+        MainView.HSplitTop(15.0f, 0, &MainView);
+        MainView.HSplitTop(200.0f, &ContentArea, &MainView);
+
+        if(m_WorstClientTab == WORST_TAB_INFO)
+            UI()->DoLabel(&ContentArea, "Worst Client v1.0", 14.0f, TEXTALIGN_ML);
+        else if(m_WorstClientTab == WORST_TAB_NOTIFICATIONS)
+            UI()->DoLabel(&ContentArea, "Notification Settings", 14.0f, TEXTALIGN_ML);
+        else if(m_WorstClientTab == WORST_TAB_VISUALS)
+            UI()->DoLabel(&ContentArea, "Visuals Settings", 14.0f, TEXTALIGN_ML);
+    }
 }
