@@ -5,6 +5,8 @@
 
 #include "render.h"
 
+#include "components/worstclient.h"
+
 #include <base/color.h>
 #include <base/types.h>
 #include <base/vmath.h>
