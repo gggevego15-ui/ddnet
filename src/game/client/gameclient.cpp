@@ -7,6 +7,7 @@
 #include "components/binds.h"
 #include "components/broadcast.h"
 #include "components/camera.h"
+#include "components/worstclient.h"
 #include "components/chat.h"
 #include "components/console.h"
 #include "components/controls.h"
@@ -141,7 +142,6 @@ void CGameClient::OnConsoleInit()
 					      &m_Particles.m_RenderTrailExtra,
 					      &m_Items,
 					      &m_Ghost,
-		                  m&m_WorstClient,
 					      &m_Players,
 					      &m_MapLayersForeground,
 					      &m_Particles.m_RenderExplosions,
@@ -166,6 +166,7 @@ void CGameClient::OnConsoleInit()
 					      &m_Tooltips,
 					      &m_KeyBinder,
 					      &m_GameConsole,
+		                  &m_WorstClient,
 					      &m_MenuBackground});
 
 	// build the input stack
