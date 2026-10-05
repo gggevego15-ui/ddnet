@@ -3,16 +3,13 @@ name: Build Worst Client
 
 on:
   push:
-    branches:
-      - "**"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  build-windows:
-    name: Build Windows Release
+  build:
     runs-on: windows-2022
 
     steps:
@@ -21,50 +18,21 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
-      - name: Configure CMake
-        run: >
-          cmake -S . -B build
-          -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_GENERATOR_PLATFORM=x64
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --config Release --parallel
 
-      - name: Find executables
+      - name: Find EXE
         shell: pwsh
         run: |
-          Write-Host "Searching for EXE files..."
+          Get-ChildItem -Path build -Filter *.exe -Recurse
 
-          Get-ChildItem -Path build -Filter *.exe -Recurse |
-            Select-Object FullName, Length |
-            Format-Table -AutoSize
-
-      - name: Package
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path artifact | Out-Null
-
-          $files = Get-ChildItem -Path build -Filter *.exe -Recurse
-
-          if ($files.Count -eq 0) {
-            Write-Error "No EXE files were produced."
-            exit 1
-          }
-
-          foreach ($file in $files) {
-            Copy-Item $file.FullName artifact\$($file.Name) -Force
-          }
-
-      - name: Upload Windows build
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: WorstClient-Windows
-          path: artifact/*
+          path: build/**/*.exe
           if-no-files-found: error
-          retention-days: 14
 ```
