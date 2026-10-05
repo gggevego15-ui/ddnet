@@ -1,4 +1,3 @@
-```yaml
 name: Build Worst Client
 
 on:
@@ -26,13 +25,11 @@ jobs:
 
       - name: Find EXE
         shell: pwsh
-        run: |
-          Get-ChildItem -Path build -Filter *.exe -Recurse
+        run: Get-ChildItem -Path build -Filter *.exe -Recurse
 
-      - name: Upload
+      - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
           name: WorstClient-Windows
           path: build/**/*.exe
           if-no-files-found: error
-```
