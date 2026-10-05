@@ -5,30 +5,21 @@
 
 class CWorstClient : public CComponent
 {
-public:
-	void OnInit() override;
-	void OnRender() override;
-	void OnConsoleInit() override;
-
-private:
-	bool m_Active = false;
+	bool m_Open = false;
 	int m_Tab = 0;
+	float m_Animation = 0.0f;
 
-	bool m_Visuals[16]{};
-	bool m_Training[16]{};
-	bool m_Other[16]{};
-
-	float m_MenuAlpha = 0.0f;
-	float m_HoverAnimation[64]{};
+	bool m_Visual[12]{};
+	bool m_Gameplay[12]{};
+	bool m_Other[12]{};
 
 	void RenderMenu();
-	void RenderVisualTab();
-	void RenderTrainingTab();
-	void RenderOtherTab();
-	void RenderInfoTab();
+	void RenderTabButton(const char *pText, int Tab, float X, float Y);
+	void RenderToggle(const char *pText, bool &Value, float X, float Y);
 
-	void DrawButton(const char *pText, float X, float Y, float W, float H, bool *pValue);
-	void DrawTab(const char *pText, int Tab, float X, float Y, float W, float H);
+public:
+	void OnRender() override;
+	bool OnInput(const IInput::CEvent &Event) override;
 };
 
 #endif
