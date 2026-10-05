@@ -18,6 +18,9 @@ class CWorstClient : public CComponent
 	void RenderToggle(const char *pText, bool &Value, float X, float Y);
 
 public:
+	// CComponent
+	int Sizeof() const override { return sizeof(*this); }
+
 	void OnRender() override;
 	bool OnInput(const IInput::CEvent &Event) override;
 };
