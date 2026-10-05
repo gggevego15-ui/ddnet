@@ -160,6 +160,7 @@ public:
 	CMotd m_Motd;
 	CBroadcast m_Broadcast;
 	CGameConsole m_GameConsole;
+    CWorstClient m_WorstClient;
 	CBinds m_Binds;
 	CKeyBinder m_KeyBinder;
 	CParticles m_Particles;
