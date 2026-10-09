@@ -17,6 +17,7 @@ void CWorstClient::OnRender()
 		return;
 
 	RenderMenu();
+	m_MouseWasPressed = m_MousePressed;
 }
 
 bool CWorstClient::OnInput(const IInput::CEvent &Event)
@@ -35,6 +36,8 @@ bool CWorstClient::OnInput(const IInput::CEvent &Event)
 
 void CWorstClient::RenderMenu()
 {
+	m_MousePressed = Input()->NativeMousePressed(0);
+	const vec2 MousePos = Input()->NativeMousePos();
 	const float W = Graphics()->ScreenWidth();
 	const float H = Graphics()->ScreenHeight();
 
@@ -61,7 +64,6 @@ void CWorstClient::RenderMenu()
 
 	// Заголовок
 	TextRender()->Text(
-		nullptr,
 		X + 28,
 		Y + 22,
 		25.0f,
@@ -69,7 +71,6 @@ void CWorstClient::RenderMenu()
 		-1.0f);
 
 	TextRender()->Text(
-		nullptr,
 		X + 29,
 		Y + 51,
 		12.0f,
@@ -217,18 +218,17 @@ void CWorstClient::RenderTabButton(
 	Graphics()->QuadsEnd();
 
 	TextRender()->Text(
-		nullptr,
 		X + 18,
 		Y + 11,
 		13.0f,
 		pText,
 		-1.0f);
 
-	if(Input()->MouseButton(0) &&
-		Input()->MouseX() >= X &&
-		Input()->MouseX() <= X + 160.0f &&
-		Input()->MouseY() >= Y &&
-		Input()->MouseY() <= Y + 40.0f)
+	if((m_MousePressed && !m_MouseWasPressed) &&
+		MousePos.x >= X &&
+		MousePos.x <= X + 160.0f &&
+		MousePos.y >= Y &&
+		MousePos.y <= Y + 40.0f)
 	{
 		m_Tab = Tab;
 	}
@@ -241,10 +241,10 @@ void CWorstClient::RenderToggle(
 	float Y)
 {
 	const bool Hover =
-		Input()->MouseX() >= X &&
-		Input()->MouseX() <= X + 320.0f &&
-		Input()->MouseY() >= Y &&
-		Input()->MouseY() <= Y + 38.0f;
+		MousePos.x >= X &&
+		MousePos.x <= X + 320.0f &&
+		MousePos.y >= Y &&
+		MousePos.y <= Y + 38.0f;
 
 	Graphics()->QuadsBegin();
 
@@ -259,7 +259,6 @@ void CWorstClient::RenderToggle(
 	Graphics()->QuadsEnd();
 
 	TextRender()->Text(
-		nullptr,
 		X + 14,
 		Y + 10,
 		13.0f,
@@ -267,13 +266,12 @@ void CWorstClient::RenderToggle(
 		-1.0f);
 
 	TextRender()->Text(
-		nullptr,
 		X + 270,
 		Y + 10,
 		12.0f,
 		Value ? "ON" : "OFF",
 		-1.0f);
 
-	if(Input()->MouseButton(0) && Hover)
+	if((m_MousePressed && !m_MouseWasPressed) && Hover)
 		Value = !Value;
 }
