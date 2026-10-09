@@ -179,6 +179,7 @@ void CGameClient::OnConsoleInit()
 						  &m_Spectator,
 						  &m_Emoticon,
 						  &m_ImportantAlert,
+						  &m_WorstClient,
 						  &m_Menus,
 						  &m_Controls,
 						  &m_TouchControls,
