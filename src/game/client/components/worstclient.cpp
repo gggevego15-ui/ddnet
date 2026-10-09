@@ -164,7 +164,6 @@ void CWorstClient::RenderMenu()
 	else
 	{
 		TextRender()->Text(
-			nullptr,
 			X + 50,
 			Y + 165,
 			20.0f,
@@ -172,7 +171,6 @@ void CWorstClient::RenderMenu()
 			-1.0f);
 
 		TextRender()->Text(
-			nullptr,
 			X + 50,
 			Y + 205,
 			14.0f,
@@ -180,7 +178,6 @@ void CWorstClient::RenderMenu()
 			-1.0f);
 
 		TextRender()->Text(
-			nullptr,
 			X + 50,
 			Y + 235,
 			14.0f,
@@ -188,7 +185,6 @@ void CWorstClient::RenderMenu()
 			-1.0f);
 
 		TextRender()->Text(
-			nullptr,
 			X + 50,
 			Y + 280,
 			14.0f,
@@ -225,10 +221,10 @@ void CWorstClient::RenderTabButton(
 		-1.0f);
 
 	if((m_MousePressed && !m_MouseWasPressed) &&
-		MousePos.x >= X &&
-		MousePos.x <= X + 160.0f &&
-		MousePos.y >= Y &&
-		MousePos.y <= Y + 40.0f)
+		Input()->NativeMousePos().x >= X &&
+		Input()->NativeMousePos().x <= X + 160.0f &&
+		Input()->NativeMousePos().y >= Y &&
+		Input()->NativeMousePos().y <= Y + 40.0f)
 	{
 		m_Tab = Tab;
 	}
@@ -241,10 +237,10 @@ void CWorstClient::RenderToggle(
 	float Y)
 {
 	const bool Hover =
-		MousePos.x >= X &&
-		MousePos.x <= X + 320.0f &&
-		MousePos.y >= Y &&
-		MousePos.y <= Y + 38.0f;
+		Input()->NativeMousePos().x >= X &&
+		Input()->NativeMousePos().x <= X + 320.0f &&
+		Input()->NativeMousePos().y >= Y &&
+		Input()->NativeMousePos().y <= Y + 38.0f;
 
 	Graphics()->QuadsBegin();
 
