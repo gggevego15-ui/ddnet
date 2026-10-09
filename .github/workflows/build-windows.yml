@@ -23,13 +23,27 @@ jobs:
       - name: Build
         run: cmake --build build --config Release --parallel
 
-      - name: Find EXE
+      - name: Package runnable client
         shell: pwsh
-        run: Get-ChildItem -Path build -Filter *.exe -Recurse
+        run: |
+          $package = "package/WorstClient"
+          New-Item -ItemType Directory -Force -Path $package | Out-Null
+          Copy-Item "build/Release/DDNet.exe" "$package/DDNet.exe"
+          Copy-Item "data" "$package/data" -Recurse
+          Copy-Item "storage.cfg" "$package/storage.cfg"
+          if (Test-Path "build/Release/*.dll") {
+            Copy-Item "build/Release/*.dll" $package
+          }
+          @(
+            "Worst Client - Windows",
+            "",
+            "Run DDNet.exe from this folder. Keep the data folder and storage.cfg next to it.",
+            "Do not move DDNet.exe out of this folder."
+          ) | Set-Content "$package/README.txt"
 
-      - name: Upload EXE
+      - name: Upload runnable package
         uses: actions/upload-artifact@v4
         with:
           name: WorstClient-Windows
-          path: build/**/*.exe
+          path: package/WorstClient/**
           if-no-files-found: error
