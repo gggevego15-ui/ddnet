@@ -2748,6 +2748,8 @@ if(CLIENT)
     components/touch_controls.h
     components/voting.cpp
     components/voting.h
+    components/worstclient.cpp
+    components/worstclient.h
     gameclient.cpp
     gameclient.h
     laser_data.cpp
