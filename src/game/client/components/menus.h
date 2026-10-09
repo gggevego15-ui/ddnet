@@ -71,21 +71,6 @@ private:
 
 	int m_DirectionQuadContainerIndex;
 
-    // Worst Client
-    enum EWorstTab
-    {
-        WORST_TAB_INFO = 0,
-        WORST_TAB_NOTIFICATIONS,
-        WORST_TAB_VISUALS
-    };
-
-    bool m_WorstClientOpen = false;
-    int m_WorstClientTab = WORST_TAB_INFO;
-
-    CButtonContainer m_WorstClientMainBtn;
-    CButtonContainer m_WorstTabInfoBtn;
-    CButtonContainer m_WorstTabNotifBtn;
-    CButtonContainer m_WorstTabVisualsBtn;
 	// menus_settings_assets.cpp
 public:
 	struct SCustomItem
