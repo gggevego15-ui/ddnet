@@ -6,6 +6,8 @@
 class CWorstClient : public CComponent
 {
 	bool m_Open = false;
+	bool m_MousePressed = false;
+	bool m_MouseWasPressed = false;
 	int m_Tab = 0;
 	float m_Animation = 0.0f;
 
